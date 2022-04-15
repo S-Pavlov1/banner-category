@@ -1,4 +1,4 @@
-package com.pavlov.bannerCategory.model;
+package com.pavlov.bannerCategory.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,13 +10,12 @@ import java.sql.Time;
 @Setter
 @Entity
 @Table(name ="logRecords")
-public class LogRecord {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+public class LogRecord extends IdentifiableObject{
 
     private String idAddress;
     private Time requestTime;
+
+    @ManyToOne
+    @JoinColumn(name = "bannerId")
     private Banner banner;
 }
