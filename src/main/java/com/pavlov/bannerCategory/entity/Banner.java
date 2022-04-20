@@ -3,6 +3,7 @@ package com.pavlov.bannerCategory.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -14,13 +15,13 @@ import java.util.Set;
 @Table(name = "banners")
 public class Banner extends DeletableObject {
 
+    @Column(unique = true)
     private String name;
 
     @Column(nullable = false)
     private Integer price;
 
     @ManyToMany
-    @JoinColumn(name = "categoryId")
     private Set<Category> categories;
 
     private String content;

@@ -4,9 +4,10 @@ import com.pavlov.bannerCategory.dto.BannerDTO;
 import com.pavlov.bannerCategory.dto.CategoryDTO;
 import com.pavlov.bannerCategory.entity.Banner;
 import com.pavlov.bannerCategory.entity.Category;
-import com.pavlov.bannerCategory.service.CategoryServiceI;
+import com.pavlov.bannerCategory.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -14,11 +15,12 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
-public class BannerIMapper implements IMapper<Banner, BannerDTO> {
+public class BannerMapper implements IMapper<Banner, BannerDTO> {
 
-    private final CategoryServiceI categoryService;
+    private final CategoryService categoryService;
 
-    private final ModelMapper modelMapper;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public Banner toEntity(BannerDTO dto) {
@@ -27,9 +29,9 @@ public class BannerIMapper implements IMapper<Banner, BannerDTO> {
         entity.setName(dto.getName());
         entity.setPrice(dto.getPrice());
         entity.setContent(dto.getContent());
-        Set<Category> categories = dto.getCategories().stream().map(categoryService::getEntity).collect(Collectors.toSet());
-        entity.setCategories(categories);
-        return null;
+        Set<Integer> categories = dto.getCategories();
+        entity.setCategories(categories != null ? categories.stream().map(categoryService::getEntity).collect(Collectors.toSet()) : null);
+        return entity;
     }
 
     @Override
@@ -41,6 +43,6 @@ public class BannerIMapper implements IMapper<Banner, BannerDTO> {
         dto.setContent(entity.getContent());
         Set<Integer> categories = entity.getCategories().stream().map(s -> modelMapper.map(s,CategoryDTO.class).getId()).collect(Collectors.toSet());
         dto.setCategories(categories);
-        return null;
+        return dto;
     }
 }

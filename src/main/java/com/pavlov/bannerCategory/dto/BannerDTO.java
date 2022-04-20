@@ -20,6 +20,7 @@ public class BannerDTO implements DTO {
     @NotEmpty
     private String name;
 
+    @NotEmpty
     private Integer price;
 
     @NotNull

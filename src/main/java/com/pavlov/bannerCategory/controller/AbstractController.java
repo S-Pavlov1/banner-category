@@ -1,14 +1,17 @@
 package com.pavlov.bannerCategory.controller;
 
+import com.pavlov.bannerCategory.dto.DTO;
+import com.pavlov.bannerCategory.entity.IdentifiableObject;
 import com.pavlov.bannerCategory.mapper.IMapper;
 import com.pavlov.bannerCategory.service.ICrudService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-
-public abstract class AbstractController <E, D> implements ICrudController<E, D>{
+@Slf4j
+public abstract class AbstractController <E extends IdentifiableObject, D extends DTO> implements ICrudController<E, D>{
 
     private final ICrudService<E> service;
 
@@ -17,7 +20,9 @@ public abstract class AbstractController <E, D> implements ICrudController<E, D>
     @PostMapping
     @Override
     public ResponseEntity<?> addEntity (@RequestBody D dto) {
-        service.addEntity(mapper.toEntity(dto));
+        E entity = mapper.toEntity(dto);
+        service.addEntity(entity);
+        log.info("POST request for entity with id : {}", entity.getId());
         return ResponseEntity.ok().build();
     }
 
@@ -25,13 +30,17 @@ public abstract class AbstractController <E, D> implements ICrudController<E, D>
     @Override
     public ResponseEntity<?> deleteEntity(@PathVariable int id) {
         service.deleteEntity(id);
+        log.info("DELETE request for entity with id : {}", id);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}")
     @Override
     public ResponseEntity<?> getEntity(@PathVariable int id) {
-        return ResponseEntity.ok(mapper.toDto(service.getEntity(id)));
+        log.info("GET request for entity with id : {}", id);
+        E entity = service.getEntity(id);
+        log.info("Found entity with id : {}", entity.getId());
+        return entity == null ? ResponseEntity.ok().build() : ResponseEntity.ok(mapper.toDto(entity));
     }
 
     @PutMapping
@@ -39,5 +48,11 @@ public abstract class AbstractController <E, D> implements ICrudController<E, D>
     public ResponseEntity<?> updateEntity(@RequestBody D dto) {
         service.updateEntity(mapper.toEntity(dto));
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> search(@RequestParam String substring) {
+        log.info("SEARCH with substring {}", substring);
+        return ResponseEntity.ok(service.search(substring));
     }
 }

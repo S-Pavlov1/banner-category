@@ -1,14 +1,18 @@
 package com.pavlov.bannerCategory.controller;
 
-import com.pavlov.bannerCategory.service.BannerServiceI;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.pavlov.bannerCategory.dto.BannerDTO;
+import com.pavlov.bannerCategory.entity.Banner;
+import com.pavlov.bannerCategory.mapper.BannerMapper;
+import com.pavlov.bannerCategory.service.BannerService;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@ReadingConverter
-@RequestMapping("api/banners")
-public class BannerController {
+@RestController
+@RequestMapping("/banners")
+public class BannerController extends AbstractController <Banner, BannerDTO>{
 
-    @Autowired
-    private BannerServiceI bannerService;
+    public BannerController(BannerService service, BannerMapper mapper) {
+        super(service, mapper);
+    }
 }

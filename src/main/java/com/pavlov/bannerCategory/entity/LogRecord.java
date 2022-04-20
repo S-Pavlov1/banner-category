@@ -1,10 +1,12 @@
 package com.pavlov.bannerCategory.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -13,7 +15,8 @@ import java.sql.Time;
 public class LogRecord extends IdentifiableObject{
 
     private String idAddress;
-    private Time requestTime;
+    private String userAgent;
+    private LocalDateTime requestTime;
 
     @ManyToOne
     @JoinColumn(name = "bannerId")

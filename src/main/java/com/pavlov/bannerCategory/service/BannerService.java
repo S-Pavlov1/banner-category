@@ -6,9 +6,9 @@ import com.pavlov.bannerCategory.repository.BannerRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BannerServiceI extends AbstractICrudService<Banner> {
+public class BannerService extends AbstractCrudService<Banner> {
 
-    public BannerServiceI(BannerRepository repository) {
+    public BannerService(BannerRepository repository) {
         this.setRepository(repository);
     }
 

@@ -4,13 +4,15 @@ import com.pavlov.bannerCategory.dto.CategoryDTO;
 import com.pavlov.bannerCategory.entity.Category;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class CategoryIMapper implements IMapper<Category, CategoryDTO> {
+public class CategoryMapper implements IMapper<Category, CategoryDTO> {
 
-    private final ModelMapper modelMapper;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public Category toEntity(CategoryDTO dto) {

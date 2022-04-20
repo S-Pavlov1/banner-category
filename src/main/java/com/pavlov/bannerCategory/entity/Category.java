@@ -14,10 +14,12 @@ import java.util.Set;
 @Table(name = "categories")
 public class Category extends DeletableObject {
 
+    @Column(unique = true)
     private String name;
 
+    @Column(unique = true)
     private String requestId;
 
-    @ManyToMany(mappedBy = "banners")
+    @ManyToMany(mappedBy = "categories")
     private Set<Banner> banners;
 }

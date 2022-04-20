@@ -12,9 +12,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class CategoryServiceI extends AbstractICrudService<Category> {
+public class CategoryService extends AbstractCrudService<Category> {
 
-    public CategoryServiceI(CategoryRepository repository) {
+    public CategoryService(CategoryRepository repository) {
         this.setRepository(repository);
     }
 
