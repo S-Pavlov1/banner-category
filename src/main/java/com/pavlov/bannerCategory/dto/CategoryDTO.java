@@ -19,4 +19,10 @@ public class CategoryDTO implements DTO{
 
     @NotEmpty
     private String requestId;
+
+
+    @Override
+    public String toString() {
+        return "name: " + name + " requestId: " + requestId;
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -40,6 +41,11 @@ public abstract class AbstractCrudService<E extends DeletableObject> implements 
         E entity = repository.findById(id).orElseThrow(() -> new NotFoundException("Object not fond. Wrong id: " + id));
         if (entity.isDeleted()) return null;
         return entity;
+    }
+
+    @Override
+    public List<E> getAllEntities() {
+        return repository.findAll().stream().filter(e -> e.isDeleted() == false).collect(Collectors.toList());
     }
 
     @Override

@@ -36,7 +36,7 @@ public class BannerMapper implements IMapper<Banner, BannerDTO> {
 
     @Override
     public BannerDTO toDto(Banner entity) {
-        BannerDTO dto = modelMapper.map(entity, BannerDTO.class);
+        BannerDTO dto = new BannerDTO();//modelMapper.map(entity, BannerDTO.class);
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setPrice(entity.getPrice());

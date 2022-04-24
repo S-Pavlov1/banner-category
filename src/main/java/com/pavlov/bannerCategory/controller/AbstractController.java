@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Slf4j
 public abstract class AbstractController <E extends IdentifiableObject, D extends DTO> implements ICrudController<E, D>{
@@ -20,6 +23,7 @@ public abstract class AbstractController <E extends IdentifiableObject, D extend
     @PostMapping
     @Override
     public ResponseEntity<?> addEntity (@RequestBody D dto) {
+        log.info("POST request DTO: {}", dto.toString());
         E entity = mapper.toEntity(dto);
         service.addEntity(entity);
         log.info("POST request for entity with id : {}", entity.getId());
@@ -43,9 +47,18 @@ public abstract class AbstractController <E extends IdentifiableObject, D extend
         return entity == null ? ResponseEntity.ok().build() : ResponseEntity.ok(mapper.toDto(entity));
     }
 
+    @GetMapping
+    @Override
+    public ResponseEntity<?> getAllEntities() {
+        List<E> entities = service.getAllEntities();
+        //log.info("GET all entities of :{}", entities.get(0).getClass());
+        return ResponseEntity.ok(entities.stream().map(mapper::toDto).collect(Collectors.toList()));
+    }
+
     @PutMapping
     @Override
     public ResponseEntity<?> updateEntity(@RequestBody D dto) {
+        log.info("PUT request DTO: {}", dto.toString());
         service.updateEntity(mapper.toEntity(dto));
         return ResponseEntity.ok().build();
     }
@@ -53,6 +66,6 @@ public abstract class AbstractController <E extends IdentifiableObject, D extend
     @GetMapping("/search")
     public ResponseEntity<?> search(@RequestParam String substring) {
         log.info("SEARCH with substring {}", substring);
-        return ResponseEntity.ok(service.search(substring));
+        return ResponseEntity.ok(service.search(substring).stream().map(mapper::toDto).collect(Collectors.toList()));
     }
 }

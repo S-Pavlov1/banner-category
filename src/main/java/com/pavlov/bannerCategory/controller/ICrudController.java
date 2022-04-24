@@ -10,6 +10,8 @@ public interface ICrudController <E, D> {
 
     ResponseEntity<?> getEntity(int id);
 
+    ResponseEntity<?> getAllEntities();
+
     ResponseEntity<?> updateEntity(D dto);
 
 }

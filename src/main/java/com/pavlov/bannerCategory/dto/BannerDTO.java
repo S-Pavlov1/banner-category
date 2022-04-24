@@ -29,4 +29,10 @@ public class BannerDTO implements DTO {
     @NotEmpty
     private String content;
 
+
+    @Override
+    public String toString() {
+        return " name: " + name + " price: " + price + " content: " + content + " categories: " +
+                categories.stream().map(Object::toString).reduce("",String::concat);
+    }
 }

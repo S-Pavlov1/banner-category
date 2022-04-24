@@ -11,6 +11,8 @@ public interface ICrudService<E>{
 
     E getEntity(int id);
 
+    List<E> getAllEntities();
+
     void updateEntity (E entity);
 
     List<E> search (String substring);
