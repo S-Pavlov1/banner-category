@@ -30,7 +30,7 @@ public class BannerMapper implements IMapper<Banner, BannerDTO> {
         entity.setPrice(dto.getPrice());
         entity.setContent(dto.getContent());
         Set<Integer> categories = dto.getCategories();
-        entity.setCategories(categories != null ? categories.stream().map(categoryService::getEntity).collect(Collectors.toSet()) : null);
+        entity.setCategories(categories != null ? categories.stream().map(categoryService::getEntity).collect(Collectors.toList()) : null);
         return entity;
     }
 

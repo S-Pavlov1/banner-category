@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Getter
@@ -15,9 +16,11 @@ import java.util.Set;
 public class Category extends DeletableObject {
 
     @Column(unique = true)
+    @NotBlank(message = "Name may not be empty")
     private String name;
 
     @Column(unique = true)
+    @NotBlank(message = "RequestId may not be empty")
     private String requestId;
 
     @ManyToMany(mappedBy = "categories")

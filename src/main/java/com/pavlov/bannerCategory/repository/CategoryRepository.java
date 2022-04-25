@@ -16,7 +16,7 @@ public interface CategoryRepository extends SearchRepository<Category, Integer> 
             "and c.isDeleted = false")
     List<Category> search(String substring);
 
-    Optional<Category> findByName(String name);
+    Optional<Category> findByNameAndIsDeletedIsFalse(String name);
 
-    Optional<Category> findByRequestId(String requestId);
+    Optional<Category> findByRequestIdAndIsDeletedIsFalse(String requestId);
 }

@@ -20,8 +20,6 @@ public abstract class AbstractCrudService<E extends DeletableObject> implements 
     @Setter
     private SearchRepository<E, Integer> repository;
 
-    private LogRecordService logRecordService;
-
     @Override
     @Transactional
     public void addEntity(E entity) {
@@ -45,7 +43,7 @@ public abstract class AbstractCrudService<E extends DeletableObject> implements 
 
     @Override
     public List<E> getAllEntities() {
-        return repository.findAll().stream().filter(e -> e.isDeleted() == false).collect(Collectors.toList());
+        return repository.findAll().stream().filter(e -> !e.isDeleted()).collect(Collectors.toList());
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.pavlov.bannerCategory.dto.DTO;
 import com.pavlov.bannerCategory.entity.IdentifiableObject;
 import com.pavlov.bannerCategory.mapper.IMapper;
 import com.pavlov.bannerCategory.service.ICrudService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +14,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Getter
 @Slf4j
 public abstract class AbstractController <E extends IdentifiableObject, D extends DTO> implements ICrudController<E, D>{
+
 
     private final ICrudService<E> service;
 
