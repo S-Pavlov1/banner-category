@@ -17,7 +17,7 @@ services:
 
 
   backend:
-    image: mydude:latest
+    image: myBackend:latest
     depends_on:
       - db
     environment:
@@ -30,7 +30,7 @@ services:
       - mynet
 
   frontend:
-    image: mybuddy:latest
+    image: myFrontend:latest
     depends_on:
       - backend
     ports:
