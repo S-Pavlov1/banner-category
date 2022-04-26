@@ -1,5 +1,48 @@
 version: '1'
 
 services:
-  mysql:
-    image:
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: banner_category
+      MYSQL_USER: banner_category_user
+      MYSQL_PASSWORD: banner_category_password
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3307:3306
+    networks:
+      - mynet
+
+
+
+  backend:
+    image: mydude:latest
+    depends_on:
+      - db
+    environment:
+      DB_URI: jdbc:mysql://db:3306/banner_category?allowPublicKeyRetrieval=true&useSSL=false
+      DB_USERNAME: root
+      DB_PASSWORD: root
+    ports:
+      - 8080:8080
+    networks:
+      - mynet
+
+  frontend:
+    image: mybuddy:latest
+    depends_on:
+      - backend
+    ports:
+      - 80:80
+    networks:
+      - mynet
+
+
+networks:
+  mynet:
+
+
+
+
+

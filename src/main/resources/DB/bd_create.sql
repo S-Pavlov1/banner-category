@@ -1,0 +1,1 @@
+CREATE SCHEMA `banner_category` ;
